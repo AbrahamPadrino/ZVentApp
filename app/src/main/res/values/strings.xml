@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Z-VentApp</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="email">Email</string>
+    <string name="clave">Clave</string>
+    <string name="acceder">Acceder</string>
+    <string name="crear_cuenta">Crear Cuenta</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="buscar">Buscar</string>
+    <string name="nombre">Nombre</string>
+    <string name="vigente">Vigente</string>
+    <string name="menu_usuario">Usuario</string>
+    <string name="editar_usuario">Editar Usuario</string>
+    <string name="nuevo_usuario">Nuevo Usuario</string>
+    <string name="titulo">TITULO</string>
+    <string name="dato">Dato</string>
+    <string name="estado">Vigente</string>
+    <string name="nrodoc">Nro. Documento</string>
+    <string name="no_vigente">No Vigente</string>
+    <string name="menu_cliente">Cliente</string>
+    <string name="editar_cliente">Editar Cliente</string>
+    <string name="nuevo_cliente">Nuevo Cliente</string>
+    <string name="codigo_barra">Codigo de Barra</string>
+    <string name="descripcion">Descripcion</string>
+    <string name="precio">Precio</string>
+    <string name="menu_producto">Producto</string>
+    <string name="editar_producto">Editar Producto</string>
+    <string name="nuevo_producto">Nuevo Producto</string>
+</resources>

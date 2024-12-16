@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.z_ventapp.presentation.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_usuario"
+        android:name="com.example.z_ventapp.presentation.ui.usuario.UsuarioFragment"
+        android:label="@string/menu_usuario"
+        tools:layout="@layout/fragment_usuario" >
+        <action
+            android:id="@+id/action_nav_usuario_to_operacionUsuarioActivity"
+            app:destination="@id/operacionUsuarioActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/operacionUsuarioActivity"
+        android:name="com.example.z_ventapp.presentation.ui.usuario.OperacionUsuarioActivity"
+        android:label="activity_operacion_usuario"
+        tools:layout="@layout/activity_operacion_usuario" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </activity>
+    <fragment
+        android:id="@+id/nav_cliente"
+        android:name="com.example.z_ventapp.presentation.ui.cliente.ClienteFragment"
+        android:label="@string/menu_cliente"
+        tools:layout="@layout/fragment_cliente" >
+        <action
+            android:id="@+id/action_nav_cliente_to_operacionClienteActivity"
+            app:destination="@id/operacionClienteActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/operacionClienteActivity"
+        android:name="com.example.z_ventapp.presentation.ui.cliente.OperacionClienteActivity"
+        android:label="activity_operacion_cliente"
+        tools:layout="@layout/activity_operacion_cliente" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </activity>
+    <fragment
+        android:id="@+id/nav_producto"
+        android:name="com.example.z_ventapp.presentation.ui.producto.ProductoFragment"
+        android:label="@string/menu_producto"
+        tools:layout="@layout/fragment_producto" >
+        <action
+            android:id="@+id/action_nav_producto_to_operacionProductoActivity"
+            app:destination="@id/operacionProductoActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/operacionProductoActivity"
+        android:name="com.example.z_ventapp.presentation.ui.producto.OperacionProductoActivity"
+        android:label="activity_operacion_producto"
+        tools:layout="@layout/activity_operacion_producto" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </activity>
+
+</navigation>
