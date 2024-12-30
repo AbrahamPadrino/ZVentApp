@@ -37,4 +37,9 @@
     <string name="menu_producto">Producto</string>
     <string name="editar_producto">Editar Producto</string>
     <string name="nuevo_producto">Nuevo Producto</string>
+    <string name="importe">Importe:</string>
+    <string name="valor_cero">0.00</string>
+    <string name="cliente">Cliente</string>
+    <string name="mensaje_home">Para insertar productos a su ticket presione el botón ( + ) Agregar.</string>
+    <string name="buscar_cliente">Buscar Cliente.</string>
 </resources>

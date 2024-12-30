@@ -4,13 +4,16 @@ import android.content.Context
 import androidx.room.Room
 import com.example.z_ventapp.data.dao.ClienteDao
 import com.example.z_ventapp.data.dao.ProductoDao
+import com.example.z_ventapp.data.dao.TicketDao
 import com.example.z_ventapp.data.dao.UsuarioDao
 import com.example.z_ventapp.data.database.AppDatabase
 import com.example.z_ventapp.data.repository.ClienteRepositoryImpl
 import com.example.z_ventapp.data.repository.ProductoRepositoryImpl
+import com.example.z_ventapp.data.repository.TicketRepositoryImpl
 import com.example.z_ventapp.data.repository.UsuarioRepositoryImpl
 import com.example.z_ventapp.domain.repository.ClienteRepository
 import com.example.z_ventapp.domain.repository.ProductoRepository
+import com.example.z_ventapp.domain.repository.TicketRepository
 import com.example.z_ventapp.domain.repository.UsuarioRepository
 import dagger.Module
 import dagger.Provides
@@ -47,6 +50,10 @@ object RoomModule {
     @Provides
     fun provideProductoDao(db: AppDatabase) = db.productoDao()
 
+    @Singleton
+    @Provides
+    fun provideTicketDao(db: AppDatabase) = db.ticketDao()
+
     //**** Proveer el Repository **** //
     @Singleton
     @Provides
@@ -64,6 +71,12 @@ object RoomModule {
     @Provides
     fun provideProductoRepository(dao: ProductoDao) : ProductoRepository {
         return ProductoRepositoryImpl(dao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideTicketRepository(dao: TicketDao) : TicketRepository {
+        return TicketRepositoryImpl(dao)
     }
 
 }

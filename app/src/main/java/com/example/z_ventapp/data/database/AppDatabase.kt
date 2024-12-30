@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.z_ventapp.data.dao.ClienteDao
 import com.example.z_ventapp.data.dao.ProductoDao
+import com.example.z_ventapp.data.dao.TicketDao
 import com.example.z_ventapp.data.dao.UsuarioDao
 import com.example.z_ventapp.data.entity.ClienteEntity
 import com.example.z_ventapp.data.entity.DetalleTicketEntity
@@ -28,5 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun clienteDao(): ClienteDao
 
     abstract fun productoDao(): ProductoDao
+
+    abstract fun ticketDao(): TicketDao
 
 }
