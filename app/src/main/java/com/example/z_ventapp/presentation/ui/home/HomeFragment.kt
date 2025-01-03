@@ -1,5 +1,6 @@
 package com.example.z_ventapp.presentation.ui.home
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.transition.TransitionManager
 import com.example.z_ventapp.databinding.FragmentHomeBinding
+import com.example.z_ventapp.presentation.common.UtilsAnimation.crearTransformacion
+import com.google.android.material.transition.MaterialArcMotion
+import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import pe.pcs.libpcs.UtilsCommon
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -40,10 +46,30 @@ class HomeFragment : Fragment() {
     }
 
     private fun initListener() {
-
+        //
         binding.etCliente.setOnClickListener {
             val dialog = BuscarClienteFragment()
             dialog.show(childFragmentManager, "BuscarClienteFragment")
+        }
+        //
+        binding.fabOpciones.setOnClickListener {
+
+            UtilsCommon.hideKeyboard(requireContext(), it)
+
+            TransitionManager.beginDelayedTransition(
+                binding.coordinatorLayout,
+                crearTransformacion(
+                    binding.fabOpciones,
+                    binding.mcOpciones
+                )
+            )
+
+            binding.mcOpciones.visibility = View.VISIBLE
+            binding.fabOpciones.visibility = View.GONE
+        }
+        //
+        binding.ibCancelar.setOnClickListener {
+            minimizarOpcion()
         }
 
     }
@@ -61,6 +87,21 @@ class HomeFragment : Fragment() {
             }
         }
 
+    }
+
+
+
+    private fun minimizarOpcion(){
+        TransitionManager.beginDelayedTransition(
+            binding.coordinatorLayout,
+            crearTransformacion(
+                binding.mcOpciones,
+                binding.fabOpciones
+            )
+        )
+
+        binding.mcOpciones.visibility = View.GONE
+        binding.fabOpciones.visibility = View.VISIBLE
     }
 
 }
