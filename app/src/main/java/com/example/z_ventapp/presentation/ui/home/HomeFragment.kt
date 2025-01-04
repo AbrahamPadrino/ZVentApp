@@ -71,6 +71,11 @@ class HomeFragment : Fragment() {
         binding.ibCancelar.setOnClickListener {
             minimizarOpcion()
         }
+        //
+        binding.btAgregarProducto.setOnClickListener {
+            minimizarOpcion()
+            CatalogoFragment().show(childFragmentManager, "CatalogoFragment")
+        }
 
     }
 

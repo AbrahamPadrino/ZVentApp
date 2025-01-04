@@ -45,4 +45,5 @@
     <string name="opciones">Opciones</string>
     <string name="agregar_producto">AGREGAR PRODUCTO</string>
     <string name="confirmar_ticket">CONFIRMAR TICKET</string>
+    <string name="catalogo_producto">Catalogo de Productos</string>
 </resources>
