@@ -26,7 +26,8 @@ import pe.pcs.libpcs.UtilsCommon
 import pe.pcs.libpcs.UtilsMessage
 
 @AndroidEntryPoint
-class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener {
+class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener,
+    DialogCantidad.IOnClickListener {
 
     private lateinit var binding: FragmentCatalogoBinding
     private val viewModel: HomeViewModel by activityViewModels()
@@ -52,6 +53,11 @@ class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener {
         initObserver()
 
         viewModel.listarProducto("")
+    }
+
+    // Variable para controlar Dialogo de Cantidad
+    companion object {
+        private var flagCantidad = false
     }
 
     private fun initListener() {
@@ -91,7 +97,7 @@ class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener {
     private fun initObserver() {
 
         viewModel.totalItem.observe(viewLifecycleOwner) {
-            binding.includeToolbar.toolbar.subtitle = if(it > 0) "Items: ${it.toString()}" else ""
+            binding.includeToolbar.toolbar.subtitle = if (it > 0) "Items: ${it.toString()}" else ""
         }
 
         // observar UiState Listar
@@ -124,7 +130,26 @@ class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener {
     }
 
     override fun clickAgregar(model: Producto) {
-        TODO("Not yet implemented")
+        UtilsCommon.hideKeyboard(requireContext(), requireView())
+
+        if (flagCantidad) return
+
+        flagCantidad = true
+        viewModel.asignarProducto(model)
+
+        DialogCantidad.newinstance(
+            model.descripcion,
+            "Selecc. Cantidad y Precio",
+            model.precio,
+            this
+        ).show(childFragmentManager, "DialogCantidad")
+
+    }
+
+    override fun eviarItem(cantidad: Int, precio: Double) {
+        flagCantidad = false
+        viewModel.agregarProductoCarrito(cantidad, precio)
+
     }
 
 }

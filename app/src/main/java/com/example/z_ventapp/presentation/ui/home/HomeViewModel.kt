@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.z_ventapp.domain.model.DetalleTicket
 import com.example.z_ventapp.domain.model.Producto
 import com.example.z_ventapp.domain.usecase.producto.ListarProductoUseCase
 import com.example.z_ventapp.domain.usecase.producto.ObtenerProductoPorCodigoBarraUseCase
@@ -44,6 +45,9 @@ class HomeViewModel @Inject constructor(
     // Mensaje de producto no encontrado
     private val _mensaje = MutableLiveData<String>()
     val mensaje: LiveData<String> = _mensaje
+    // Lista de carrito
+    private val _listaCarrito = MutableLiveData<MutableList<DetalleTicket>>(mutableListOf())
+    val listaCarrito: LiveData<MutableList<DetalleTicket>> = _listaCarrito
 
     // Resetear Lista de Productos
     fun resetUiStateListarProducto() {
@@ -70,6 +74,46 @@ class HomeViewModel @Inject constructor(
         makeCall { obtenerProductoPorCodigoBarraUseCase(codigoBarra) }.let { //  .let --> suspend function
             _uiStateCodigoBarra.value = it
         }
+    }
+
+    fun limpiarMensaje() {
+        _mensaje.value = ""
+    }
+
+    fun asignarProducto(item: Producto?) {
+        _itemProducto.value = item
+    }
+
+    private fun actualizarTotales() {
+        _totalItem.value = _listaCarrito.value?.sumOf { it.cantidad }
+        _totalImporte.value = _listaCarrito.value?.sumOf { it.cantidad * it.precio }
+    }
+
+    fun agregarProductoCarrito(cantidad: Int, precio: Double) {
+        // Validar carrito vacio
+        if (cantidad == 0 || precio == 0.0 || itemProducto.value == null) return
+        // Validar si el producto ya se encuentra en el carrito
+        _listaCarrito.value?.find {
+            it.idproducto == itemProducto.value!!.id
+        }?.let {
+            _mensaje.value = "El producto ya se encuentra en el carrito"
+            return
+        }
+        // Agregar producto al carrito
+        _listaCarrito.value?.add(
+            DetalleTicket().apply {
+                idproducto = itemProducto.value!!.id
+                descripcion = itemProducto.value!!.descripcion
+                this.cantidad = cantidad
+                this.precio = precio
+                importe = precio * cantidad
+            }
+        )
+
+        _listaCarrito.value = _listaCarrito.value
+
+        actualizarTotales()
+        asignarProducto(null)
     }
 
 }
