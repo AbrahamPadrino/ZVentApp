@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
@@ -19,6 +20,8 @@ import com.example.z_ventapp.databinding.FragmentCatalogoBinding
 import com.example.z_ventapp.domain.model.Producto
 import com.example.z_ventapp.presentation.adapter.CatalogoAdapter
 import com.example.z_ventapp.presentation.common.UiState
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pe.pcs.libpcs.SimpleTextWatcher
@@ -92,41 +95,110 @@ class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener,
             }
         })
 
+        binding.includeBuscar.tilBuscar.setStartIconOnClickListener {
+            UtilsCommon.hideKeyboard(requireContext(), it)
+
+            viewModel.asignarProducto(null)
+
+            if(requireActivity().applicationContext.checkSelfPermission(android.Manifest.permission.CAMERA) ==
+                android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                leerCodigoBarra()
+            } else {
+                pedirPermisoCamara.launch(android.Manifest.permission.CAMERA)
+            }
+        }
+
     }
 
     private fun initObserver() {
+
+        viewModel.mensaje.observe(viewLifecycleOwner){
+            if(it.isEmpty()) return@observe
+
+            UtilsMessage.showToast(requireContext(), it)
+            viewModel.limpiarMensaje()
+        }
+
 
         viewModel.totalItem.observe(viewLifecycleOwner) {
             binding.includeToolbar.toolbar.subtitle = if (it > 0) "Items: ${it.toString()}" else ""
         }
 
-        // observar UiState Listar
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // observar UiState Listar
+                launch {
+                    viewModel.uiStateListarProducto.collect {
+                        when (it) {
+                            is UiState.Error -> {
+                                binding.progressBar.isVisible = false
+                                UtilsMessage.showAlertOk(
+                                    "ERROR", it.message, requireContext()
+                                )
+                                viewModel.resetUiStateListarProducto()
+                            }
 
-                viewModel.uiStateListarProducto.collect {
-                    when (it) {
-                        is UiState.Error -> {
-                            binding.progressBar.isVisible = false
-                            UtilsMessage.showAlertOk(
-                                "ERROR", it.message, requireContext()
-                            )
-                            viewModel.resetUiStateListarProducto()
+                            UiState.Loading -> binding.progressBar.isVisible = true
+
+                            is UiState.Success -> {
+                                binding.progressBar.isVisible = false
+                                (binding.rvLista.adapter as CatalogoAdapter).submitList(it.data)
+                            }
+
+                            null -> Unit
                         }
+                    }
+                }
 
-                        UiState.Loading -> binding.progressBar.isVisible = true
+                // observar UiState para Listar Codigo Barra
+                launch {
+                    viewModel.uiStateCodigoBarra.collect {
+                        when (it) {
+                            is UiState.Error -> {
+                                binding.progressBar.isVisible = false
+                                UtilsMessage.showAlertOk(
+                                    "ERROR", it.message, requireContext()
+                                )
+                                viewModel.resetUiStateCodigoBarra()
+                            }
 
-                        is UiState.Success -> {
-                            binding.progressBar.isVisible = false
-                            (binding.rvLista.adapter as CatalogoAdapter).submitList(it.data)
+                            UiState.Loading -> binding.progressBar.isVisible = true
+
+                            is UiState.Success -> {
+
+                                binding.progressBar.isVisible = false
+
+                                if(it.data == null) {
+                                    UtilsMessage.showToast(
+                                        requireContext(),
+                                        "Codigo de Barra No Encontrado"
+                                    )
+                                    viewModel.resetUiStateCodigoBarra()
+                                    leerCodigoBarra()
+                                    return@collect
+                                }
+
+                                if (flagCantidad) return@collect
+
+                                flagCantidad = true
+                                viewModel.asignarProducto(it.data)
+                                DialogCantidad.newinstance(
+                                    it.data.descripcion,
+                                    "Selecc. Cantidad y Precio",
+                                    it.data.precio,
+                                    this@CatalogoFragment
+                                ).show(childFragmentManager, "DialogCantidad")
+
+                                viewModel.resetUiStateCodigoBarra()
+                            }
+
+                            null -> Unit
                         }
-
-                        null -> Unit
                     }
                 }
             }
         }
-
     }
 
     override fun clickAgregar(model: Producto) {
@@ -152,4 +224,24 @@ class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener,
 
     }
 
+    // Controlador de resultado para escanear.
+    private val barcodeLauncher = registerForActivityResult(ScanContract()) {
+        viewModel.buscarProductoPorCodigoBarra(it.contents)
+    }
+
+    private fun leerCodigoBarra() {
+        barcodeLauncher.launch(
+            ScanOptions().apply {
+                setPrompt("Escanea el codigo de barra o QR")
+                setOrientationLocked(false)
+            }
+        )
+    }
+
+    private val pedirPermisoCamara = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ){
+        if(it) leerCodigoBarra()
+        else UtilsMessage.showToast(requireContext(), "Debe aceptar los permisos de la camara")
+    }
 }
