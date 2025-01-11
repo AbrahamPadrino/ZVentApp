@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.z_ventapp.domain.model.DetalleTicket
 import com.example.z_ventapp.domain.model.Producto
+import com.example.z_ventapp.domain.model.Ticket
 import com.example.z_ventapp.domain.usecase.producto.ListarProductoUseCase
 import com.example.z_ventapp.domain.usecase.producto.ObtenerProductoPorCodigoBarraUseCase
 import com.example.z_ventapp.domain.usecase.ticket.GrabarTicketUseCase
@@ -48,6 +49,9 @@ class HomeViewModel @Inject constructor(
     // Lista de carrito
     private val _listaCarrito = MutableLiveData<MutableList<DetalleTicket>>(mutableListOf())
     val listaCarrito: LiveData<MutableList<DetalleTicket>> = _listaCarrito
+    // Manejador de Estado
+    private val _uiStateGrabarTicket = MutableLiveData<UiState<Int>?>(null)
+    val uiStateGrabarTicket: LiveData<UiState<Int>?> = _uiStateGrabarTicket
 
     // Resetear Lista de Productos
     fun resetUiStateListarProducto() {
@@ -115,5 +119,54 @@ class HomeViewModel @Inject constructor(
         actualizarTotales()
         asignarProducto(null)
     }
+
+    // Resetear Estado
+    fun resetUiStateGrabarTicket() {
+        _uiStateGrabarTicket.value = null
+    }
+
+    fun quitarProductoCarrito(model: DetalleTicket) {
+        _listaCarrito.value?.remove(model)
+        _listaCarrito.value = _listaCarrito.value
+        actualizarTotales()
+    }
+
+    fun limpiarCarrito() {
+        _listaCarrito.value?.clear()
+        _listaCarrito.value = _listaCarrito.value
+        actualizarTotales()
+    }
+
+    fun aumentarCantidadProducto(model: DetalleTicket) {
+        _listaCarrito.value?.find {
+            it.idproducto == model.idproducto
+        }?.let {
+            it.cantidad += 1 // ++
+            it.importe = it.cantidad * it.precio
+            actualizarTotales()
+        }
+        _listaCarrito.value = _listaCarrito.value
+    }
+
+    fun disminuirCantidadProducto(model: DetalleTicket) {
+        _listaCarrito.value?.find {
+            it.idproducto == model.idproducto && it.cantidad > 0
+        }?.let {
+            it.cantidad-- // -=
+            it.importe = it.cantidad * it.precio
+            actualizarTotales()
+        }
+        _listaCarrito.value = _listaCarrito.value
+    }
+
+    fun grabarTicket(model: Ticket) = viewModelScope.launch {
+        _uiStateGrabarTicket.value = UiState.Loading
+
+        makeCall { grabarTicketUseCase(model) }.let {
+            _uiStateGrabarTicket.value = it
+        }
+
+    }
+
 
 }

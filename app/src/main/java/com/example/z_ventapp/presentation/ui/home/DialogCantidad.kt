@@ -22,7 +22,6 @@ class DialogCantidad : DialogFragment() {
         fun eviarItem(cantidad: Int, precio: Double)
     }
 
-
     companion object {
         private const val DEFAULT_CANTIDAD = 1
 
