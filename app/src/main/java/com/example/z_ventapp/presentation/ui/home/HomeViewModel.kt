@@ -26,8 +26,8 @@ class HomeViewModel @Inject constructor(
     private val obtenerProductoPorCodigoBarraUseCase: ObtenerProductoPorCodigoBarraUseCase
 ) : ViewModel() {
 
+    //*** Inicio para Catalogo Fragment ***//
     // Observers
-
     // Listar Productos
     private val _uiStateListarProducto = MutableStateFlow<UiState<List<Producto>>?>(null)
     val uiStateListarProducto: StateFlow<UiState<List<Producto>>?> = _uiStateListarProducto
@@ -36,23 +36,14 @@ class HomeViewModel @Inject constructor(
     val uiStateCodigoBarra: StateFlow<UiState<Producto?>?> = _uiStateCodigoBarra
     // Almacenar Producto
     private val _itemProducto = MutableLiveData<Producto?>()
-    val itemProducto: LiveData<Producto?> = _itemProducto
     // Cantidad de items en el carrito
     private val _totalItem = MutableLiveData<Int>()
     val totalItem: LiveData<Int> = _totalItem
-    // Precio total de los items en el carrito
-    private val _totalImporte = MutableLiveData<Double>()
-    val totalImporte: LiveData<Double> = _totalImporte
     // Mensaje de producto no encontrado
     private val _mensaje = MutableLiveData<String>()
     val mensaje: LiveData<String> = _mensaje
-    // Lista de carrito
-    private val _listaCarrito = MutableLiveData<MutableList<DetalleTicket>>(mutableListOf())
-    val listaCarrito: LiveData<MutableList<DetalleTicket>> = _listaCarrito
-    // Manejador de Estado
-    private val _uiStateGrabarTicket = MutableLiveData<UiState<Int>?>(null)
-    val uiStateGrabarTicket: LiveData<UiState<Int>?> = _uiStateGrabarTicket
 
+    // Reseters
     // Resetear Lista de Productos
     fun resetUiStateListarProducto() {
         _uiStateListarProducto.value = null
@@ -61,7 +52,7 @@ class HomeViewModel @Inject constructor(
     fun resetUiStateCodigoBarra() {
         _uiStateCodigoBarra.value = null
     }
-
+    // Functions
     // Listar Productos
     fun listarProducto(dato: String) = viewModelScope.launch {
         _uiStateListarProducto.value = UiState.Loading
@@ -95,10 +86,10 @@ class HomeViewModel @Inject constructor(
 
     fun agregarProductoCarrito(cantidad: Int, precio: Double) {
         // Validar carrito vacio
-        if (cantidad == 0 || precio == 0.0 || itemProducto.value == null) return
+        if (cantidad == 0 || precio == 0.0 || _itemProducto.value == null) return
         // Validar si el producto ya se encuentra en el carrito
         _listaCarrito.value?.find {
-            it.idproducto == itemProducto.value!!.id
+            it.idproducto == _itemProducto.value!!.id
         }?.let {
             _mensaje.value = "El producto ya se encuentra en el carrito"
             return
@@ -106,8 +97,8 @@ class HomeViewModel @Inject constructor(
         // Agregar producto al carrito
         _listaCarrito.value?.add(
             DetalleTicket().apply {
-                idproducto = itemProducto.value!!.id
-                descripcion = itemProducto.value!!.descripcion
+                idproducto = _itemProducto.value!!.id
+                descripcion = _itemProducto.value!!.descripcion
                 this.cantidad = cantidad
                 this.precio = precio
                 importe = precio * cantidad
@@ -120,11 +111,29 @@ class HomeViewModel @Inject constructor(
         asignarProducto(null)
     }
 
+    /**
+     *
+     */
+
+    //*** Inicio para Home Fragment ***//
+    // Precio total de los items en el carrito
+    // Observers
+    private val _totalImporte = MutableLiveData<Double>()
+    val totalImporte: LiveData<Double> = _totalImporte
+    // Lista de carrito
+    private val _listaCarrito = MutableLiveData<MutableList<DetalleTicket>>(mutableListOf())
+    val listaCarrito: LiveData<MutableList<DetalleTicket>> = _listaCarrito
+    // Manejador de Estado
+    private val _uiStateGrabarTicket = MutableLiveData<UiState<Int>?>(null)
+    val uiStateGrabarTicket: LiveData<UiState<Int>?> = _uiStateGrabarTicket
+
+    // Reseters
     // Resetear Estado
     fun resetUiStateGrabarTicket() {
         _uiStateGrabarTicket.value = null
     }
 
+    // Functions
     fun quitarProductoCarrito(model: DetalleTicket) {
         _listaCarrito.value?.remove(model)
         _listaCarrito.value = _listaCarrito.value

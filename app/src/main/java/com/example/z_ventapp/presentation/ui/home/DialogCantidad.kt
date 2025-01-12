@@ -49,7 +49,7 @@ class DialogCantidad : DialogFragment() {
             ibMas.setOnClickListener { actualizarCantidad(1) }
         }
 
-        return MaterialAlertDialogBuilder(requireContext()).apply {
+        val builder = MaterialAlertDialogBuilder(requireContext()).apply {
             setView(binding.root)
             setTitle(titulo)
             setMessage(mensaje)
@@ -70,6 +70,11 @@ class DialogCantidad : DialogFragment() {
 
             }
         }.create()
+
+        builder.setCancelable(false) // para que no se pueda cerrar con el boton de atras
+        builder.setCanceledOnTouchOutside(false) // para que no se pueda cerrar con tocar fuera
+
+        return builder
     }
 
     @SuppressLint("SetTextI18n")
