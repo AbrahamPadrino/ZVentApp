@@ -48,4 +48,17 @@
     <string name="catalogo_producto">Catalogo de Productos</string>
     <string name="cantidad_uno">1</string>
     <string name="cantidad">Cantidad</string>
+    <string name="reportes">Reportes</string>
+    <string name="menu_reporte_ticket">Reporte de Ticket</string>
+    <string name="menu_reporte_mensual">Reporte Mensual</string>
+    <string name="menu_reporte_caja">Reporte de Caja</string>
+    <string name="app">App</string>
+    <string name="menu_empresa">Empresa</string>
+    <string name="menu_impresora">Impresora</string>
+    <string name="menu_cambiar_calve">Cambiar Clave</string>
+    <string name="menu_acerca_de">Acerca De</string>
+    <string name="version_app">v1.0.0</string>
+    <string name="descripcion_app">Descubre nuestra avanzada aplicación de Punto de Venta, desarrollada en Kotlin y basada en el patrón MVVM con Clean Architecture, diseñada para ofrecerte una experiencia de gestión integral. Con esta aplicación, tendrás el control total sobre tus productos, clientes, usuarios del sistema, y ventas a través de tickets detallados.\n\nLa aplicación no solo facilita la creación y gestión de ventas, sino que también te permite generar reportes gráficos intuitivos y precisos, imprimir tickets directamente desde la app, y compartir reportes de manera fácil y rápida a través de correo electrónico, WhatsApp u otras plataformas. Además, podrás exportar toda la información relevante en formato Excel, ideal para llevar un registro detallado y realizar análisis avanzados.\n\nMaximiza la eficiencia de tu negocio y mantén todo bajo control con nuestra solución de Punto de Venta, diseñada para adaptarse a las necesidades de cualquier tipo de comercio.</string>
+    <string name="clave_actual">Clave Actual</string>
+    <string name="nueva_clave">Nueva Clave</string>
 </resources>

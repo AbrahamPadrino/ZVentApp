@@ -3,6 +3,16 @@
     <style name="Base.Theme.ZVentApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/primaryDark</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/accent</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/primaryDark</item>
+
+
     </style>
 
     <style name="Theme.ZVentApp" parent="Base.Theme.ZVentApp" />
