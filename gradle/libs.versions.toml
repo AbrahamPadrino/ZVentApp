@@ -13,6 +13,7 @@ lifecycleLivedataKtx = "2.8.7"
 lifecycleViewmodelKtx = "2.8.7"
 navigationFragmentKtx = "2.7.7"
 navigationUiKtx = "2.7.7"
+datastore = "1.1.1"
 
 playServicesAds = "23.5.0"
 firebaseAnalytics = "22.1.2"
@@ -60,6 +61,10 @@ core = { module = "com.google.zxing:core", version.ref = "core" }
 
 # Libreria de utilidades
 libreria_pcs = { module = "com.github.programadorescs:LibreriaPcs", version.ref = "libreriapcs" }
+
+# DataStore
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastore" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

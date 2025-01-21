@@ -2,16 +2,19 @@ package com.example.z_ventapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.z_ventapp.data.dao.ClienteDao
-import com.example.z_ventapp.data.dao.ProductoDao
-import com.example.z_ventapp.data.dao.TicketDao
-import com.example.z_ventapp.data.dao.UsuarioDao
-import com.example.z_ventapp.data.database.AppDatabase
+import com.example.z_ventapp.data.local.dao.ClienteDao
+import com.example.z_ventapp.data.local.dao.ProductoDao
+import com.example.z_ventapp.data.local.dao.TicketDao
+import com.example.z_ventapp.data.local.dao.UsuarioDao
+import com.example.z_ventapp.data.local.database.AppDatabase
 import com.example.z_ventapp.data.repository.ClienteRepositoryImpl
+import com.example.z_ventapp.data.repository.EmpresaRepositoryImpl
 import com.example.z_ventapp.data.repository.ProductoRepositoryImpl
 import com.example.z_ventapp.data.repository.TicketRepositoryImpl
 import com.example.z_ventapp.data.repository.UsuarioRepositoryImpl
+import com.example.z_ventapp.data.storage.LocalDataStore
 import com.example.z_ventapp.domain.repository.ClienteRepository
+import com.example.z_ventapp.domain.repository.EmpresaRepository
 import com.example.z_ventapp.domain.repository.ProductoRepository
 import com.example.z_ventapp.domain.repository.TicketRepository
 import com.example.z_ventapp.domain.repository.UsuarioRepository
@@ -36,6 +39,11 @@ object RoomModule {
         AppDatabase::class.java,
         DATABASE_NAME
     ).build()
+
+    //**** Proveer localdatastore **** //
+    @Singleton
+    @Provides
+    fun provideDataStore(@ApplicationContext context: Context) = LocalDataStore(context)
 
     //**** Proveer el DAO **** //
     @Singleton
@@ -77,6 +85,12 @@ object RoomModule {
     @Provides
     fun provideTicketRepository(dao: TicketDao) : TicketRepository {
         return TicketRepositoryImpl(dao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideEmpresaRepository(dataStore: LocalDataStore) : EmpresaRepository {
+        return EmpresaRepositoryImpl(dataStore)
     }
 
 }

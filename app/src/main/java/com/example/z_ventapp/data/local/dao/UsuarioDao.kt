@@ -1,4 +1,4 @@
-package com.example.z_ventapp.data.dao
+package com.example.z_ventapp.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.example.z_ventapp.data.entity.UsuarioEntity
+import com.example.z_ventapp.data.local.entity.UsuarioEntity
 import kotlinx.coroutines.flow.Flow
 
 /*Su función es la de interactuar con la base de datos a través de la implementación de funciones*/

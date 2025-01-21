@@ -1,11 +1,11 @@
-package com.example.z_ventapp.data.dao
+package com.example.z_ventapp.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.z_ventapp.data.entity.ClienteEntity
+import com.example.z_ventapp.data.local.entity.ClienteEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

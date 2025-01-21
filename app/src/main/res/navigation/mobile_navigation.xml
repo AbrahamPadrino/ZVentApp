@@ -74,5 +74,10 @@
         android:name="com.example.z_ventapp.presentation.ui.cambiarclave.CambiarClaveFragment"
         android:label="@string/menu_cambiar_calve"
         tools:layout="@layout/fragment_cambiar_clave" />
+    <fragment
+        android:id="@+id/nav_empresa"
+        android:name="com.example.z_ventapp.presentation.ui.empresa.EmpresaFragment"
+        android:label="@string/menu_empresa"
+        tools:layout="@layout/fragment_empresa" />
 
 </navigation>

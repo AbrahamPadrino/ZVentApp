@@ -1,11 +1,11 @@
-package com.example.z_ventapp.data.dao
+package com.example.z_ventapp.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.z_ventapp.data.entity.DetalleTicketEntity
-import com.example.z_ventapp.data.entity.TicketEntity
+import com.example.z_ventapp.data.local.entity.DetalleTicketEntity
+import com.example.z_ventapp.data.local.entity.TicketEntity
 
 @Dao
 interface TicketDao {

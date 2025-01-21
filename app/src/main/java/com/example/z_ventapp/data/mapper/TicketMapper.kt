@@ -1,7 +1,7 @@
 package com.example.z_ventapp.data.mapper
 
-import com.example.z_ventapp.data.entity.ClienteEntity
-import com.example.z_ventapp.data.entity.TicketEntity
+import com.example.z_ventapp.data.local.entity.ClienteEntity
+import com.example.z_ventapp.data.local.entity.TicketEntity
 import com.example.z_ventapp.domain.model.Cliente
 import com.example.z_ventapp.domain.model.Ticket
 
@@ -23,7 +23,7 @@ object TicketMapper {
     }
 
     // Domain -> Entity
-    fun toDatabase(model: Ticket): TicketEntity{
+    fun toDatabase(model: Ticket): TicketEntity {
         return TicketEntity(
             id = model.id,
             fecha = model.fecha,

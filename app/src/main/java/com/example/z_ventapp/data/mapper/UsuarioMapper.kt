@@ -1,6 +1,6 @@
 package com.example.z_ventapp.data.mapper
 
-import com.example.z_ventapp.data.entity.UsuarioEntity
+import com.example.z_ventapp.data.local.entity.UsuarioEntity
 import com.example.z_ventapp.domain.model.Usuario
 
 object UsuarioMapper {
@@ -17,7 +17,7 @@ object UsuarioMapper {
     }
 
     // Domain -> Entity
-    fun toDatabase(model: Usuario): UsuarioEntity{
+    fun toDatabase(model: Usuario): UsuarioEntity {
         return UsuarioEntity(
             id = model.id,
             nombre = model.nombre,

@@ -1,4 +1,4 @@
-package com.example.z_ventapp.data.entity
+package com.example.z_ventapp.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

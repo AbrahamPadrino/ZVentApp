@@ -1,6 +1,6 @@
 package com.example.z_ventapp.data.repository
 
-import com.example.z_ventapp.data.dao.TicketDao
+import com.example.z_ventapp.data.local.dao.TicketDao
 import com.example.z_ventapp.data.mapper.DetalleTicketMapper
 import com.example.z_ventapp.data.mapper.TicketMapper
 import com.example.z_ventapp.domain.model.Ticket

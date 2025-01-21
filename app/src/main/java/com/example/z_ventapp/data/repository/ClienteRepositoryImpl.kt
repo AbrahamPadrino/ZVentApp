@@ -1,6 +1,6 @@
 package com.example.z_ventapp.data.repository
 
-import com.example.z_ventapp.data.dao.ClienteDao
+import com.example.z_ventapp.data.local.dao.ClienteDao
 import com.example.z_ventapp.data.mapper.ClienteMapper
 import com.example.z_ventapp.domain.model.Cliente
 import com.example.z_ventapp.domain.repository.ClienteRepository
