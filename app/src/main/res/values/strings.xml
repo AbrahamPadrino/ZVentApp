@@ -65,4 +65,8 @@
     <string name="ruc">Ruc</string>
     <string name="direccion">Direccion</string>
     <string name="telefono">Telefono</string>
+    <string name="quick_printer">Quick Printer</string>
+    <string name="raw_bt">Raw BT</string>
+    <string name="alias_impresora">Alias de Impresora</string>
+    <string name="mensaje_impresora">NOTA: Los alias de las impresoras deben de ir separados por coma (,) ejemplo: Alias1, Alias2, Alias3, etc. Esto es obligatorio para el tipo Quick printer.\n\nPara la impresora Raw BT esto no aplica, por lo tanto este campo alias puede estar vacío.</string>
 </resources>

@@ -79,5 +79,10 @@
         android:name="com.example.z_ventapp.presentation.ui.empresa.EmpresaFragment"
         android:label="@string/menu_empresa"
         tools:layout="@layout/fragment_empresa" />
+    <fragment
+        android:id="@+id/nav_impresora"
+        android:name="com.example.z_ventapp.presentation.ui.impresora.ImpresoraFragment"
+        android:label="@string/menu_impresora"
+        tools:layout="@layout/fragment_impresora" />
 
 </navigation>

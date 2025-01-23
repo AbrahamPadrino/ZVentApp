@@ -9,12 +9,14 @@ import com.example.z_ventapp.data.local.dao.UsuarioDao
 import com.example.z_ventapp.data.local.database.AppDatabase
 import com.example.z_ventapp.data.repository.ClienteRepositoryImpl
 import com.example.z_ventapp.data.repository.EmpresaRepositoryImpl
+import com.example.z_ventapp.data.repository.ImpresoraRepositoryImpl
 import com.example.z_ventapp.data.repository.ProductoRepositoryImpl
 import com.example.z_ventapp.data.repository.TicketRepositoryImpl
 import com.example.z_ventapp.data.repository.UsuarioRepositoryImpl
 import com.example.z_ventapp.data.storage.LocalDataStore
 import com.example.z_ventapp.domain.repository.ClienteRepository
 import com.example.z_ventapp.domain.repository.EmpresaRepository
+import com.example.z_ventapp.domain.repository.ImpresoraRepository
 import com.example.z_ventapp.domain.repository.ProductoRepository
 import com.example.z_ventapp.domain.repository.TicketRepository
 import com.example.z_ventapp.domain.repository.UsuarioRepository
@@ -91,6 +93,12 @@ object RoomModule {
     @Provides
     fun provideEmpresaRepository(dataStore: LocalDataStore) : EmpresaRepository {
         return EmpresaRepositoryImpl(dataStore)
+    }
+
+    @Singleton
+    @Provides
+    fun provideImpresoraRepository(dataStore: LocalDataStore): ImpresoraRepository {
+        return ImpresoraRepositoryImpl(dataStore)
     }
 
 }

@@ -18,6 +18,9 @@ class LocalDataStore(private val context: Context) {
         private val EMPRESA_RUC_KEY = stringPreferencesKey("empresa_ruc")
         private val EMPRESA_DIRECCION_KEY = stringPreferencesKey("empresa_direccion")
         private val EMPRESA_TELEFONO_KEY = stringPreferencesKey("empresa_telefono")
+
+        private val IMPRESORA_ALIAS_KEY = stringPreferencesKey("impresora_alias")
+        private val IMPRESORA_TIPO_KEY = stringPreferencesKey("impresora_tipo")
     }
 
     suspend fun grabarEmpresa(model: EmpresaEntity) {
@@ -35,6 +38,22 @@ class LocalDataStore(private val context: Context) {
             ruc = it[EMPRESA_RUC_KEY] ?: "",
             direccion = it[EMPRESA_DIRECCION_KEY] ?: "",
             telefono = it[EMPRESA_TELEFONO_KEY] ?: ""
+        )
+    }
+
+    // ** IMPRESORA ** //
+
+    suspend fun grabarImpresora(model: ImpresoraEntity) {
+        context.dataStore.edit {
+            it[IMPRESORA_ALIAS_KEY] = model.alias
+            it[IMPRESORA_TIPO_KEY] = model.tipo
+        }
+    }
+
+    fun obtenerImpresora(): Flow<ImpresoraEntity?> = context.dataStore.data.map {
+        ImpresoraEntity(
+            alias = it[IMPRESORA_ALIAS_KEY] ?: "",
+            tipo = it[IMPRESORA_TIPO_KEY] ?: ""
         )
     }
 }
