@@ -17,7 +17,7 @@ class ClienteAdapter(
         fun clickEditar(model: Cliente)
         fun clickEliminar(model: Cliente)
     }
-
+    // calcular las diferencias entre la lista
     private object DiffCallback : DiffUtil.ItemCallback<Cliente>() {
         override fun areItemsTheSame(oldItem: Cliente, newItem: Cliente): Boolean {
             return oldItem.id == newItem.id

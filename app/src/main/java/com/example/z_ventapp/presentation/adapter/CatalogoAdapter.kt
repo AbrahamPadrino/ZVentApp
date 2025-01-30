@@ -17,7 +17,7 @@ class CatalogoAdapter(
     interface IOnClickListener {
         fun clickAgregar(model: Producto)
     }
-
+    // calcular las diferencias entre la lista
     private object DiffCallback : DiffUtil.ItemCallback<Producto>() {
         override fun areItemsTheSame(oldItem: Producto, newItem: Producto): Boolean {
             return oldItem.id == newItem.id

@@ -6,6 +6,8 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.example.z_ventapp.data.local.entity.DetalleTicketEntity
 import com.example.z_ventapp.data.local.entity.TicketEntity
+import com.example.z_ventapp.data.local.entity.report.ReporteCajaEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TicketDao {
@@ -28,4 +30,10 @@ interface TicketDao {
         }
         return idTicket.toInt()
     }
+
+    @Query("SELECT usuario.nombre as usuario, date(fecha) as fecha, sum(total) as total " +
+            "FROM usuario inner join ticket on usuario.id = ticket.idusuario " +
+            "WHERE date(fecha) BETWEEN :desde AND :hasta AND lower(ticket.estado) = lower('vigente') " +
+            "GROUP BY date(fecha), usuario.nombre ORDER BY date(fecha) DESC")
+    fun reporteCajaPorFecha(desde: String, hasta: String): Flow<List<ReporteCajaEntity>>
 }

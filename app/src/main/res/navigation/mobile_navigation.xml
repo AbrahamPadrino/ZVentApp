@@ -84,5 +84,10 @@
         android:name="com.example.z_ventapp.presentation.ui.impresora.ImpresoraFragment"
         android:label="@string/menu_impresora"
         tools:layout="@layout/fragment_impresora" />
+    <fragment
+        android:id="@+id/nav_reporte_caja"
+        android:name="com.example.z_ventapp.presentation.ui.reportecaja.ReporteCajaFragment"
+        android:label="@string/menu_reporte_caja"
+        tools:layout="@layout/fragment_reporte_caja" />
 
 </navigation>

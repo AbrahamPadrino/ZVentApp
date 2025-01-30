@@ -15,7 +15,7 @@ class BuscarClienteAdapter(
     interface IOnClickListener {
         fun clickCliente(model: Cliente)
     }
-
+    // calcular las diferencias entre la lista
     private object DiffCallback : DiffUtil.ItemCallback<Cliente>() {
         override fun areItemsTheSame(oldItem: Cliente, newItem: Cliente): Boolean {
             return oldItem.id == newItem.id
