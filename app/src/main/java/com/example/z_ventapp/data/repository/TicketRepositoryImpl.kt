@@ -3,8 +3,12 @@ package com.example.z_ventapp.data.repository
 import com.example.z_ventapp.data.local.dao.TicketDao
 import com.example.z_ventapp.data.mapper.DetalleTicketMapper
 import com.example.z_ventapp.data.mapper.ReporteCajaMapper
+import com.example.z_ventapp.data.mapper.ReporteDetalleTicketMapper
+import com.example.z_ventapp.data.mapper.ReporteTicketMapper
 import com.example.z_ventapp.data.mapper.TicketMapper
 import com.example.z_ventapp.domain.model.ReporteCaja
+import com.example.z_ventapp.domain.model.ReporteDetalleTicket
+import com.example.z_ventapp.domain.model.ReporteTicket
 import com.example.z_ventapp.domain.model.Ticket
 import com.example.z_ventapp.domain.repository.TicketRepository
 import kotlinx.coroutines.flow.Flow
@@ -32,5 +36,25 @@ class TicketRepositoryImpl @Inject constructor(
               ReporteCajaMapper.toDomain(reporteCaja)
           }
       }
+    }
+
+    override fun reporteTicketPorFecha(desde: String, hasta: String): Flow<List<ReporteTicket>> {
+        return ticketDao.reporteTicketPorFecha(desde, hasta).map {
+            it.map { reporteTicket ->
+                ReporteTicketMapper.toDomain(reporteTicket)
+            }
+        }
+    }
+
+    override suspend fun reporteDetalleTicket(id: Int): List<ReporteDetalleTicket> {
+        return ticketDao.reporteDetalleTicket(id).map {
+            ReporteDetalleTicketMapper.toDomain(it)
+        }
+    }
+
+    override suspend fun obtenerTicketPorId(idticket: Int): ReporteTicket? {
+        return ticketDao.obtenerTicketPorId(idticket)?.let {
+            ReporteTicketMapper.toDomain(it)
+        }
     }
 }
