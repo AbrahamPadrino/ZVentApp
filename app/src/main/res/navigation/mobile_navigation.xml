@@ -93,6 +93,19 @@
         android:id="@+id/nav_reporte_ticket"
         android:name="com.example.z_ventapp.presentation.ui.reporteticket.ReporteTicketFragment"
         android:label="@string/menu_reporte_ticket"
-        tools:layout="@layout/fragment_reporte_ticket" />
+        tools:layout="@layout/fragment_reporte_ticket" >
+        <action
+            android:id="@+id/action_nav_reporte_ticket_to_reporteDetalleTicketActivity"
+            app:destination="@id/reporteDetalleTicketActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/reporteDetalleTicketActivity"
+        android:name="com.example.z_ventapp.presentation.ui.reporteticket.ReporteDetalleTicketActivity"
+        android:label="activity_reporte_detalle_ticket"
+        tools:layout="@layout/activity_reporte_detalle_ticket" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </activity>
 
 </navigation>

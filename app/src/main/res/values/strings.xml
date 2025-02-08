@@ -73,4 +73,6 @@
     <string name="hasta">Hasta:</string>
     <string name="fecha_simulada">2025-26-01 15:00:00</string>
     <string name="total">Total.</string>
+    <string name="detalle_ticket">Detalle del Ticket</string>
+    <string name="detalles">Detalles:</string>
 </resources>

@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.z_ventapp.R
 import com.example.z_ventapp.databinding.FragmentReporteTicketBinding
@@ -159,6 +160,9 @@ class ReporteTicketFragment : Fragment(), ReporteTicketAdapter.IOnClickListener 
     }
 
     override fun clickDetalle(model: ReporteTicket) {
+        findNavController().navigate(
+            ReporteTicketFragmentDirections.actionNavReporteTicketToReporteDetalleTicketActivity(model.id)
+        )
 
     }
 
