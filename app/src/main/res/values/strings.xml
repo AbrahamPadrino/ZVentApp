@@ -75,4 +75,5 @@
     <string name="total">Total.</string>
     <string name="detalle_ticket">Detalle del Ticket</string>
     <string name="detalles">Detalles:</string>
+    <string name="anio">Seleccione el Año</string>
 </resources>

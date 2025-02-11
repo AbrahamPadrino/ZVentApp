@@ -1,0 +1,34 @@
+package com.example.z_ventapp.presentation.ui.reportemensual
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.z_ventapp.domain.model.ReporteTicketMensual
+import com.example.z_ventapp.domain.usecase.ticket.ReporteTicketMensualUseCase
+import com.example.z_ventapp.presentation.common.UiState
+import com.example.z_ventapp.presentation.common.makeFlowCall
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class ReporteMensualViewModel @Inject constructor(
+    private val reporteTicketMensualUseCase: ReporteTicketMensualUseCase
+): ViewModel() {
+
+    private val _uiState = MutableStateFlow<UiState<List<ReporteTicketMensual>>?>(null)
+    val uiState = _uiState.asStateFlow()
+
+    fun resetUiState() {
+        _uiState.value = null
+    }
+
+    fun reporteTicketMensual(anio: String) = viewModelScope.launch {
+        _uiState.value = UiState.Loading
+
+        makeFlowCall { reporteTicketMensualUseCase(anio) }.collect {
+            _uiState.value = it
+        }
+    }
+}

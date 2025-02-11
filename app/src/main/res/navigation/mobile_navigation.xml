@@ -107,5 +107,10 @@
             android:name="id"
             app:argType="integer" />
     </activity>
+    <fragment
+        android:id="@+id/nav_reporte_mensual"
+        android:name="com.example.z_ventapp.presentation.ui.reportemensual.ReporteMensualFragment"
+        android:label="@string/menu_reporte_mensual"
+        tools:layout="@layout/fragment_reporte_mensual" />
 
 </navigation>

@@ -9,6 +9,7 @@ import com.example.z_ventapp.data.local.entity.TicketEntity
 import com.example.z_ventapp.data.local.entity.report.ReporteCajaEntity
 import com.example.z_ventapp.data.local.entity.report.ReporteDetalleTicketEntity
 import com.example.z_ventapp.data.local.entity.report.ReporteTicketEntity
+import com.example.z_ventapp.data.local.entity.report.ReporteTicketMensualEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -53,4 +54,24 @@ interface TicketDao {
             "FROM producto inner join detalleticket on producto.id = detalleticket.idproducto " +
             "WHERE idticket=:idticket")
     suspend fun reporteDetalleTicket(idticket: Int): List<ReporteDetalleTicketEntity>
+
+    @Query("SELECT case strftime('%m', fecha) " +
+            "when '01' then 'Ene' " +
+            "when '02' then 'Feb' " +
+            "when '03' then 'Mar' " +
+            "when '04' then 'Abr' " +
+            "when '05' then 'May' " +
+            "when '06' then 'Jun' " +
+            "when '07' then 'Jul' " +
+            "when '08' then 'Ago' " +
+            "when '09' then 'Set' " +
+            "when '10' then 'Oct' " +
+            "when '11' then 'Nov' " +
+            "when '12' then 'Dic' " +
+            "end as mes, " +
+            "sum(total) as total " +
+            "FROM ticket " +
+            "WHERE strftime('%Y', fecha) = :anio AND lower(estado) = lower('vigente') " +
+            "GROUP BY strftime('%m', mes) ORDER BY strftime('%m', mes) ASC")
+    fun reporteTicketMensual(anio: String): Flow<List<ReporteTicketMensualEntity>>
 }

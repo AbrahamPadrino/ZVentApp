@@ -5,10 +5,12 @@ import com.example.z_ventapp.data.mapper.DetalleTicketMapper
 import com.example.z_ventapp.data.mapper.ReporteCajaMapper
 import com.example.z_ventapp.data.mapper.ReporteDetalleTicketMapper
 import com.example.z_ventapp.data.mapper.ReporteTicketMapper
+import com.example.z_ventapp.data.mapper.ReporteTicketMensualMapper
 import com.example.z_ventapp.data.mapper.TicketMapper
 import com.example.z_ventapp.domain.model.ReporteCaja
 import com.example.z_ventapp.domain.model.ReporteDetalleTicket
 import com.example.z_ventapp.domain.model.ReporteTicket
+import com.example.z_ventapp.domain.model.ReporteTicketMensual
 import com.example.z_ventapp.domain.model.Ticket
 import com.example.z_ventapp.domain.repository.TicketRepository
 import kotlinx.coroutines.flow.Flow
@@ -55,6 +57,14 @@ class TicketRepositoryImpl @Inject constructor(
     override suspend fun obtenerTicketPorId(idticket: Int): ReporteTicket? {
         return ticketDao.obtenerTicketPorId(idticket)?.let {
             ReporteTicketMapper.toDomain(it)
+        }
+    }
+
+    override fun reporteTicketMensual(anio: String): Flow<List<ReporteTicketMensual>> {
+        return ticketDao.reporteTicketMensual(anio).map {
+            it.map { reporteTicketMensual ->
+                ReporteTicketMensualMapper.toDomain(reporteTicketMensual)
+            }
         }
     }
 }

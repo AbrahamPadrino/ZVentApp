@@ -4,6 +4,7 @@ package com.example.z_ventapp.domain.repository
 import com.example.z_ventapp.domain.model.ReporteCaja
 import com.example.z_ventapp.domain.model.ReporteDetalleTicket
 import com.example.z_ventapp.domain.model.ReporteTicket
+import com.example.z_ventapp.domain.model.ReporteTicketMensual
 import com.example.z_ventapp.domain.model.Ticket
 import kotlinx.coroutines.flow.Flow
 
@@ -20,5 +21,7 @@ interface TicketRepository {
      suspend fun reporteDetalleTicket(id: Int): List<ReporteDetalleTicket>
 
      suspend fun obtenerTicketPorId(idticket: Int): ReporteTicket?
+
+     fun reporteTicketMensual(anio: String): Flow<List<ReporteTicketMensual>>
 
 }
