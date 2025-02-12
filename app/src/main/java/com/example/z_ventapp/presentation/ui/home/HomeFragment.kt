@@ -1,16 +1,14 @@
 package com.example.z_ventapp.presentation.ui.home
 
-import android.graphics.Color
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,19 +18,23 @@ import com.example.z_ventapp.domain.model.DetalleTicket
 import com.example.z_ventapp.domain.model.Ticket
 import com.example.z_ventapp.presentation.adapter.CarritoAdapter
 import com.example.z_ventapp.presentation.common.UiState
+import com.example.z_ventapp.presentation.common.UtilsAdmob
 import com.example.z_ventapp.presentation.common.UtilsAnimation.crearTransformacion
 import com.example.z_ventapp.presentation.ui.main.MainActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.transition.MaterialArcMotion
-import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pe.pcs.libpcs.UtilsCommon
 import pe.pcs.libpcs.UtilsDate
 import pe.pcs.libpcs.UtilsMessage
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), CarritoAdapter.IOnClickListener {
+
+    // /* Inyecta la clase para cargar la publicidad.
+    @Inject
+    lateinit var utilsAdmob: UtilsAdmob
 
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by activityViewModels()
@@ -166,6 +168,10 @@ class HomeFragment : Fragment(), CarritoAdapter.IOnClickListener {
 
                     if(it.data < 1) return@observe
 
+                     /* Mostrar la Publicidad en Pantalla
+                    utilsAdmob.interstitial?.show(requireActivity()) // Pinta la Publicidad
+                    utilsAdmob.initInterstitial() // Actualiza la Pre-carga.
+                     */
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setTitle("Información")
                         setMessage("Ticket Grabado con Exito")

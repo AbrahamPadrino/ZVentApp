@@ -13,12 +13,18 @@ import com.example.z_ventapp.R
 import com.example.z_ventapp.databinding.ActivityMainBinding
 import com.example.z_ventapp.databinding.NavHeaderMainBinding
 import com.example.z_ventapp.domain.model.Usuario
+import com.example.z_ventapp.presentation.common.UtilsAdmob
 import com.example.z_ventapp.presentation.ui.login.LoginActivity
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    // /* Inyecta la clase para cargar la publicidad.
+    @Inject
+    lateinit var utilsAdmob: UtilsAdmob
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -57,6 +63,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+
+        // Petición para pre-carga de la Publicidad
+        utilsAdmob.initInterstitial()
     }
 
     override fun onSupportNavigateUp(): Boolean {
