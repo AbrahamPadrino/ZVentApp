@@ -25,6 +25,7 @@ core = "3.5.3"
 libreriapcs = "1.5.0"
 kspVersion = "1.9.22-1.0.17"
 safeargsVersion = "2.7.7"
+splashScreen="1.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -65,6 +66,9 @@ libreria_pcs = { module = "com.github.programadorescs:LibreriaPcs", version.ref 
 # DataStore
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastore" }
+
+# splashScreen
+splash-screen = { module = "androidx.core:core-splashscreen", version.ref = "splashScreen" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

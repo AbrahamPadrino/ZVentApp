@@ -32,6 +32,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Tema por defecto despues de mostrar el SplashScreen
+        setTheme(R.style.Theme_ZVentApp)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

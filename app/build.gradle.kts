@@ -89,6 +89,9 @@ dependencies {
     implementation(libs.datastore.preferences)
     implementation(libs.datastore.core)
 
+    // SplashScreen
+    implementation(libs.splash.screen)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

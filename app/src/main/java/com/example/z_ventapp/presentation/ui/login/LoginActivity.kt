@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
 import com.example.z_ventapp.databinding.ActivityLoginBinding
 import com.example.z_ventapp.presentation.common.UiState
@@ -21,10 +22,14 @@ class LoginActivity : AppCompatActivity() {
     private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        //
+        val splashScreen = installSplashScreen() // Istancia para Cargar el SplashScreen
 
+        super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //
+        splashScreen.setKeepOnScreenCondition { false } // Mostrar y Ocultar SplashScreen
 
         initListener()
         initObserver()

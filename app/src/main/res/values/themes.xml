@@ -35,4 +35,12 @@
     <style name="FullScreenDialog" parent="ShapeAppearanceOverlay.MaterialComponents.MaterialCalendar.Window.Fullscreen">
         <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
     </style>
+
+    <!-- splash nativo -->
+    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/primaryDark</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/icono_shopping_fondo</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="postSplashScreenTheme">@style/Theme.ZVentApp</item>
+    </style>
 </resources>
