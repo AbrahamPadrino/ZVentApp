@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.z_ventapp.databinding.FragmentImpresoraBinding
 import com.example.z_ventapp.domain.model.Impresora
+import com.example.z_ventapp.presentation.common.ConstantsApp
 import com.example.z_ventapp.presentation.common.UiState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -53,7 +54,7 @@ class ImpresoraFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            val tipoImpresora = if (binding.rbQuickPrinter.isChecked) "Quick printer" else "Raw BT"
+            val tipoImpresora = if (binding.rbQuickPrinter.isChecked) ConstantsApp.DRIVER_QUICK_PRINTER else ConstantsApp.DRIVER_RAW_BT
 
             viewModel.grabar(
                 Impresora().apply {

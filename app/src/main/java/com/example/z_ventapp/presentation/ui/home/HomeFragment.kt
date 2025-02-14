@@ -20,6 +20,7 @@ import com.example.z_ventapp.presentation.adapter.CarritoAdapter
 import com.example.z_ventapp.presentation.common.UiState
 import com.example.z_ventapp.presentation.common.UtilsAdmob
 import com.example.z_ventapp.presentation.common.UtilsAnimation.crearTransformacion
+import com.example.z_ventapp.presentation.common.enviarTicketImpresora
 import com.example.z_ventapp.presentation.ui.main.MainActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +40,9 @@ class HomeFragment : Fragment(), CarritoAdapter.IOnClickListener {
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by activityViewModels()
     private val viewModelCliente: BuscarClienteViewModel by activityViewModels()
+    private val viewModelEmpresa: BuscarEmpresaViewModel by activityViewModels()
+    private val viewModelImpresora: BuscarImpresoraViewModel by activityViewModels()
+    private var mTicket: Ticket? = null
 
 
     override fun onCreateView(
@@ -55,6 +59,9 @@ class HomeFragment : Fragment(), CarritoAdapter.IOnClickListener {
 
         initListener()
         initObserver()
+
+        viewModelEmpresa.obtenerEmpresa()
+        viewModelImpresora.obtenerImpresora()
     }
 
     private fun initListener() {
@@ -116,15 +123,17 @@ class HomeFragment : Fragment(), CarritoAdapter.IOnClickListener {
                 return@setOnClickListener
             }
 
+            mTicket = Ticket().apply {
+                idusuario = MainActivity.mUsuario!!.id
+                fecha = UtilsDate.obtenerFechaHoraActual()
+                total = homeViewModel.totalImporte.value!!
+                estado = "Vigente"
+                cliente = viewModelCliente.itemCliente.value
+                detalles = homeViewModel.listaCarrito.value!!
+            }
+
             homeViewModel.grabarTicket(
-                Ticket().apply {
-                    idusuario = MainActivity.mUsuario!!.id
-                    fecha = UtilsDate.obtenerFechaHoraActual()
-                    total = homeViewModel.totalImporte.value!!
-                    estado = "Vigente"
-                    cliente = viewModelCliente.itemCliente.value
-                    detalles = homeViewModel.listaCarrito.value!!
-                }
+                mTicket!!
             )
         }
     }
@@ -139,6 +148,44 @@ class HomeFragment : Fragment(), CarritoAdapter.IOnClickListener {
                         binding.etCliente.setText(it?.nombre)
                     }
                 }
+
+                launch {
+                    viewModelEmpresa.uiStateEmpresa.collect {
+                        when(it){
+                            is UiState.Error -> {
+                                UtilsMessage.showAlertOk(
+                                    "ERROR",
+                                    it.message,
+                                    requireContext()
+                                )
+                                viewModelEmpresa.resetUiStateEmpresa()
+                            }
+                            UiState.Loading -> Unit
+                            is UiState.Success -> Unit
+                            null -> Unit
+                        }
+                    }
+                }
+
+                launch {
+                    viewModelImpresora.uiStateImpresora.collect {
+                        when(it){
+                            is UiState.Error -> {
+                                UtilsMessage.showAlertOk(
+                                    "ERROR",
+                                    it.message,
+                                    requireContext()
+                                )
+                                viewModelImpresora.resetUiStateImpresora()
+                            }
+                            UiState.Loading -> Unit
+                            is UiState.Success -> Unit
+                            null -> Unit
+                        }
+                    }
+                }
+
+
             }
         }
          // Mensaje de exito o fracaso de Grabar Ticket
@@ -174,11 +221,17 @@ class HomeFragment : Fragment(), CarritoAdapter.IOnClickListener {
                      */
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setTitle("Información")
-                        setMessage("Ticket Grabado con Exito")
+                        setMessage("Ticket Grabado con Exito\n ¿Desea Imprimir el Ticket?")
                         setCancelable(false)
 
-                        setPositiveButton("Aceptar"){
+                        setPositiveButton("SI"){
                             dialog, _ ->
+                            procesarTicket(it.data) // Procesar Ticket para imprimir
+                            limpiarDatos()
+                            dialog.dismiss()
+                        }
+
+                        setNegativeButton("NO"){ dialog, _ ->
                             limpiarDatos()
                             dialog.dismiss()
                         }
@@ -188,8 +241,6 @@ class HomeFragment : Fragment(), CarritoAdapter.IOnClickListener {
             }
         }
     }
-
-
 
     private fun minimizarOpcion(){
         TransitionManager.beginDelayedTransition(
@@ -237,6 +288,24 @@ class HomeFragment : Fragment(), CarritoAdapter.IOnClickListener {
         homeViewModel.limpiarCarrito()
         viewModelCliente.asignarCliente(null)
         homeViewModel.resetUiStateGrabarTicket()
+    }
+
+    private fun procesarTicket(ticketId: Int) {
+        mTicket?.id = ticketId
+
+        val empresa = viewModelEmpresa.itemEmpresa.value
+        val impresora = viewModelImpresora.itemImpresora.value
+
+        if (empresa != null && impresora != null) {
+            // Llamamos a enviarTicketImpresora con los parámetros correspondientes
+            enviarTicketImpresora(
+                requireContext(),
+                mTicket!!,  // Si quieres evitar el uso de !!, podrías hacer un check antes o usar let
+                empresa,
+                impresora,
+                impresora.alias
+            )
+        }
     }
 
 }
