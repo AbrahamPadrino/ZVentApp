@@ -63,12 +63,13 @@ class HomeViewModel @Inject constructor(
     }
 
     // Listar Producto por Codigo Barra
-    fun buscarProductoPorCodigoBarra(codigoBarra: String) = viewModelScope.launch {
+    fun buscarProductoPorCodigoBarra(codigoBarra: String?) = viewModelScope.launch {
         _uiStateCodigoBarra.value = UiState.Loading
 
-        makeCall { obtenerProductoPorCodigoBarraUseCase(codigoBarra) }.let { //  .let --> suspend function
+        makeCall { obtenerProductoPorCodigoBarraUseCase(codigoBarra.toString()) }.let { //  .let --> suspend function
             _uiStateCodigoBarra.value = it
         }
+        // obtenerProductoPorCodigoBarraUseCase(codigoBarra)
     }
 
     fun limpiarMensaje() {
@@ -176,6 +177,5 @@ class HomeViewModel @Inject constructor(
         }
 
     }
-
 
 }

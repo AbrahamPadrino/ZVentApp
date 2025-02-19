@@ -24,6 +24,7 @@ import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import pe.pcs.libpcs.PermissionUtils
 import pe.pcs.libpcs.SimpleTextWatcher
 import pe.pcs.libpcs.UtilsCommon
 import pe.pcs.libpcs.UtilsMessage
@@ -38,6 +39,7 @@ class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
+
     }
 
     override fun onCreateView(
@@ -99,9 +101,11 @@ class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener,
             UtilsCommon.hideKeyboard(requireContext(), it)
 
             viewModel.asignarProducto(null)
+            leerCodigoBarra()
 
-            if(requireActivity().applicationContext.checkSelfPermission(android.Manifest.permission.CAMERA) ==
-                android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            if (requireActivity().applicationContext.checkSelfPermission(android.Manifest.permission.CAMERA) ==
+                android.content.pm.PackageManager.PERMISSION_GRANTED
+            ) {
                 leerCodigoBarra()
             } else {
                 pedirPermisoCamara.launch(android.Manifest.permission.CAMERA)
@@ -112,8 +116,8 @@ class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener,
 
     private fun initObserver() {
 
-        viewModel.mensaje.observe(viewLifecycleOwner){
-            if(it.isEmpty()) return@observe
+        viewModel.mensaje.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) return@observe
 
             UtilsMessage.showToast(requireContext(), it)
             viewModel.limpiarMensaje()
@@ -169,7 +173,7 @@ class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener,
 
                                 binding.progressBar.isVisible = false
 
-                                if(it.data == null) {
+                                if (it.data == null) {
                                     UtilsMessage.showToast(
                                         requireContext(),
                                         "Codigo de Barra No Encontrado"
@@ -226,7 +230,8 @@ class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener,
 
     // Controlador de resultado para escanear.
     private val barcodeLauncher = registerForActivityResult(ScanContract()) {
-        viewModel.buscarProductoPorCodigoBarra(it.contents)
+        if (it.contents != null)
+            viewModel.buscarProductoPorCodigoBarra(it.contents)
     }
 
     private fun leerCodigoBarra() {
@@ -234,14 +239,16 @@ class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener,
             ScanOptions().apply {
                 setPrompt("Escanea el codigo de barra o QR")
                 setOrientationLocked(false)
+
             }
         )
     }
 
     private val pedirPermisoCamara = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ){
-        if(it) leerCodigoBarra()
+    ) {
+        if (it) leerCodigoBarra()
         else UtilsMessage.showToast(requireContext(), "Debe aceptar los permisos de la camara")
     }
+
 }
