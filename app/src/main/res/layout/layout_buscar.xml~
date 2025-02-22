@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:startIconDrawable="@drawable/baseline_search_24"
-        app:startIconTint="@color/primaryTextColor">
+        app:startIconTint="@color/white">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_buscar"
@@ -39,8 +39,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/buscar"
             android:singleLine="true"
-            android:textColor="@color/primaryTextColor"
-            android:textColorHint="@color/secondaryTextColor"
+            android:textColor="@color/white"
+            android:textColorHint="@color/colorVibrantLight"
             android:textCursorDrawable="@drawable/cursor_blanco" />
     </com.google.android.material.textfield.TextInputLayout>
 

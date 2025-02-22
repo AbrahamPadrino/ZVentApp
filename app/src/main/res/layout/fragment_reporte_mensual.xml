@@ -39,7 +39,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:startIconDrawable="@drawable/baseline_date_range_24"
-            app:startIconTint="@color/white">
+            app:startIconTint="@color/primaryTextColor">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_anio"
@@ -49,9 +49,9 @@
                 android:hint="@string/anio"
                 android:inputType="none"
                 android:singleLine="true"
-                android:textColor="@color/white"
+                android:textColor="@color/primaryTextColor"
                 android:textAlignment="center"
-                android:textColorHint="@color/colorVibrantLight"
+                android:textColorHint="@color/secondaryTextColor"
                 android:textCursorDrawable="@drawable/cursor_blanco" />
         </com.google.android.material.textfield.TextInputLayout>
 

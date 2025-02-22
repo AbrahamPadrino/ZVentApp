@@ -3,11 +3,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="primary">#1D3557</color>
-    <color name="primaryDark">#1D3557</color>
-    <color name="primaryLigth">#457B9D</color>
-    <color name="secondary">#E63946</color>
-    <color name="accent">#ff7071</color>
+    <color name="primary">#3F51B5</color>
+    <color name="primaryDark">#303F9F</color>
+    <color name="primaryLigth">#E8EAF6</color>
+    <color name="secondary">#6200EA</color>
+    <color name="accent">#7C4DFF</color>
 
     <color name="colorVibrantLight">#b8e0f0</color>
 
@@ -20,6 +20,7 @@
     <color name="transparentColor_0">#00FFFFFF</color>
 
     <color name="primaryTextColor">#212121</color>
+    <color name="secondaryTextColor">#616161</color>
     <color name="windowBackgroundColor">#EEEEEE</color>
 
     <color name="ultraLightGrayColor">#fafafa</color>
