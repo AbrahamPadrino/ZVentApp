@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.z_ventapp.R
 import com.example.z_ventapp.databinding.FragmentReporteMensualBinding
 import com.example.z_ventapp.domain.model.ReporteTicketMensual
 import com.example.z_ventapp.presentation.common.UiState
@@ -21,9 +20,9 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
-import com.journeyapps.barcodescanner.Util
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 import pe.pcs.libpcs.NumberPickerDialog
 import pe.pcs.libpcs.SimpleTextWatcher
 import pe.pcs.libpcs.UtilsCommon
@@ -35,14 +34,12 @@ class ReporteMensualFragment : Fragment() {
 
     private lateinit var binding: FragmentReporteMensualBinding
     private val viewModel: ReporteMensualViewModel by viewModels()
-    private val entries = ArrayList<BarEntry>() // Lista para almacenar los datos de la gráfica
-
+    private val entries = ArrayList<BarEntry>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentReporteMensualBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -69,6 +66,7 @@ class ReporteMensualFragment : Fragment() {
                 viewModel.reporteTicketMensual(s.toString().trim())
             }
         })
+
     }
 
     private fun initObserver() {
@@ -98,6 +96,7 @@ class ReporteMensualFragment : Fragment() {
 
             }
         }
+
     }
 
     private fun generarGrafico(reporte: List<ReporteTicketMensual>) {

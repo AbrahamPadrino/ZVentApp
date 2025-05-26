@@ -10,12 +10,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+
 import javax.inject.Inject
 
 @HiltViewModel
 class ReporteMensualViewModel @Inject constructor(
     private val reporteTicketMensualUseCase: ReporteTicketMensualUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<List<ReporteTicketMensual>>?>(null)
     val uiState = _uiState.asStateFlow()
@@ -31,4 +32,5 @@ class ReporteMensualViewModel @Inject constructor(
             _uiState.value = it
         }
     }
+
 }
