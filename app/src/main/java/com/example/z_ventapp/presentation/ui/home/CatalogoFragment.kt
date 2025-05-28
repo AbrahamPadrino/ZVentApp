@@ -72,7 +72,7 @@ class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener,
         binding.includeToolbar.toolbar.setSubtitleTextColor(
             ContextCompat.getColor(
                 requireContext(),
-                R.color.accent
+                R.color.colorVibrantLight
             )
         )
 
@@ -88,6 +88,7 @@ class CatalogoFragment : DialogFragment(), CatalogoAdapter.IOnClickListener,
 
         binding.includeBuscar.tilBuscar.setEndIconOnClickListener {
             binding.includeBuscar.etBuscar.setText("")
+
             UtilsCommon.hideKeyboard(requireContext(), it)
         }
 

@@ -55,23 +55,26 @@ interface TicketDao {
             "WHERE idticket=:idticket")
     suspend fun reporteDetalleTicket(idticket: Int): List<ReporteDetalleTicketEntity>
 
-    @Query("SELECT case strftime('%m', fecha) " +
-            "when '01' then 'Ene' " +
-            "when '02' then 'Feb' " +
-            "when '03' then 'Mar' " +
-            "when '04' then 'Abr' " +
-            "when '05' then 'May' " +
-            "when '06' then 'Jun' " +
-            "when '07' then 'Jul' " +
-            "when '08' then 'Ago' " +
-            "when '09' then 'Set' " +
-            "when '10' then 'Oct' " +
-            "when '11' then 'Nov' " +
-            "when '12' then 'Dic' " +
-            "end as mes, " +
-            "sum(total) as total " +
+    @Query("SELECT CASE strftime('%m', fecha) " +
+            "WHEN '01' THEN 'Ene' " +
+            "WHEN '02' THEN 'Feb' " +
+            "WHEN '03' THEN 'Mar' " +
+            "WHEN '04' THEN 'Abr' " +
+            "WHEN '05' THEN 'May' " +
+            "WHEN '06' THEN 'Jun' " +
+            "WHEN '07' THEN 'Jul' " +
+            "WHEN '08' THEN 'Ago' " +
+            "WHEN '09' THEN 'Set' " +
+            "WHEN '10' THEN 'Oct' " +
+            "WHEN '11' THEN 'Nov' " +
+            "WHEN '12' THEN 'Dic' " +
+            "END AS mes, " +
+            "SUM(total) as total, " +
+            "strftime('%m', fecha) AS mes_numero " +
             "FROM ticket " +
             "WHERE strftime('%Y', fecha) = :anio AND lower(estado) = lower('vigente') " +
-            "GROUP BY strftime('%m', mes) ORDER BY strftime('%m', mes) ASC")
+            "GROUP BY mes_numero " +
+            "ORDER BY mes_numero ASC"
+    )
     fun reporteTicketMensual(anio: String): Flow<List<ReporteTicketMensualEntity>>
 }

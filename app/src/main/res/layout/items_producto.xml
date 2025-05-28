@@ -67,7 +67,7 @@
             app:layout_constraintEnd_toStartOf="@+id/ib_eliminar"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_edit_24"
-            app:tint="@color/primaryLigth" />
+            app:tint="@color/secondaryTextColor" />
 
         <TextView
             android:id="@+id/tv_dato"
